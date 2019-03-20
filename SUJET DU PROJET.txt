@@ -1,0 +1,8 @@
+Use the Movie Database API to create your application
+https://developers.themoviedb.org
+Your application will need to:
+- perform network operations (call the API with Retrofit)
+- display at least 3 RecyclerViews (1 horizontal, 1 vertical, 1 grid)
+- open several pages (Activities)
+- have a search functionality
+- save some user data
