@@ -1,5 +1,5 @@
 What movies are in theatres?
-URL: /discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22
+URL: https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22&api_key=8e894528fa9c319948a48ce050f28657
 
 What are the most popular movies?
 URL: /discover/movie?sort_by=popularity.desc
