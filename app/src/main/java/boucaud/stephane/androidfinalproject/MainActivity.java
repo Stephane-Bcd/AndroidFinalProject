@@ -11,6 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import boucaud.stephane.androidfinalproject.Controllers.Controller;
+import boucaud.stephane.androidfinalproject.Controllers.ControllerGetGenres;
+
 public class MainActivity extends AppCompatActivity {
 
     // General parameters
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialising display data
         // Genres selection:
+
+        Controller controller = new ControllerGetGenres();
+
         List<String> list = new ArrayList<String>();
         list.add("list 1");
         list.add("list 2");
