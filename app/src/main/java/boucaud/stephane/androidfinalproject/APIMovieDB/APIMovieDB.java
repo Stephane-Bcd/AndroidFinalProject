@@ -3,8 +3,10 @@ package boucaud.stephane.androidfinalproject.APIMovieDB;
 import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Models.Genre;
+import boucaud.stephane.androidfinalproject.Models.GenresList;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /*
 Every method of an interface represents one possible API call.
@@ -14,7 +16,7 @@ The return value wraps the response in a Call object with the type of the expect
 public interface APIMovieDB {
 
     @GET("genre/movie/list")
-    Call<List<Genre>> getGenres();
+    Call<GenresList> getGenres(@Query("api_key") String api_key, @Query("language") String language);
 
 
 }

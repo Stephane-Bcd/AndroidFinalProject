@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     // General parameters
     String language = "fr";
+    String api_key = "8e894528fa9c319948a48ce050f28657";
 
     // View Objects
     Spinner spinner_genres;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialising display data
         // Genres selection:
 
-        Controller controller = new ControllerGetGenres();
+        Controller controller = new ControllerGetGenres(api_key, language);
 
         List<String> list = new ArrayList<String>();
         list.add("list 1");
