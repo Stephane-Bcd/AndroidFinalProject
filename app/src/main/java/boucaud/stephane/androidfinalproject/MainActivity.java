@@ -8,10 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.net.URL;
 import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
+import boucaud.stephane.androidfinalproject.Models.MoviesList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +67,21 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     GenresList genresList = response.body();
                     fill_Spinner_Values(genresList.getStringList(), spinner_genres, "Select Genre");
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+            public void onFailure(Call call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        // - Test Search
+        controller.querySearchMovies(1, false, "star wars", new Callback<MoviesList>(){
+            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
+                if(response.isSuccessful()) {
+                    MoviesList moviesList = response.body();
+                    textview_test.setText(moviesList.getStringTitlesList().toString());
                 } else {
                     System.out.println(response.errorBody());
                 }
