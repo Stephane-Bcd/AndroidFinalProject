@@ -9,6 +9,20 @@ public class GenresList {
     @SerializedName("genres")
     private List<Genre> genres;
 
+    public int searchGenreID(String genreName){
+        int res = 0;
+        int length = genres.size();
+        int i;
+
+        for (i = 0; i<length; i++){
+            if (genres.get(i).getGenre_name() == genreName){
+                return Integer.parseInt(genres.get(i).getGenre_id());
+            }
+        }
+
+        return res;
+    }
+
     public List<String> getStringList(){
         int length = genres.size();
         int i;

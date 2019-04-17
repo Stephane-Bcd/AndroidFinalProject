@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textview_test;
 
     // Runtime parameters
+    private GenresList genresList;
     private String Selected_genre;
+    private int Selected_genre_id;
     private int actual_page = 1;
 
 
@@ -55,12 +57,21 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * Function to make a search query on movies
+     * @param page
+     * @param include_adult
+     * @param query
+     */
     private void searchMovies (int page, boolean include_adult, String query) {
         controller.querySearchMovies(page, include_adult, query, new Callback<MoviesList>() {
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 if (response.isSuccessful()) {
                     MoviesList moviesList = response.body();
-                    textview_test.setText(moviesList.getStringTitlesList().toString());
+                    if (Selected_genre != "None" && Selected_genre != "Select Genre")
+                        textview_test.setText(moviesList.getMovies(Selected_genre_id).toString());
+                    else
+                        textview_test.setText(moviesList.getMovies().toString());
                 } else {
                     System.out.println(response.errorBody());
                 }
@@ -90,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         controller.queryGetGenres(new Callback<GenresList>(){
             public void onResponse(Call<GenresList> call, Response<GenresList> response) {
                 if(response.isSuccessful()) {
-                    GenresList genresList = response.body();
+                    genresList = response.body();
                     fill_Spinner_Values(genresList.getStringList(), spinner_genres, "Select Genre");
                 } else {
                     System.out.println(response.errorBody());
@@ -110,12 +121,14 @@ public class MainActivity extends AppCompatActivity {
         spinner_genres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Selected_genre = (String) parent.getItemAtPosition(position);
+                Selected_genre_id = genresList.searchGenreID(Selected_genre);
+                searchMovies (actual_page, false, SearchQuery.getText().toString());
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
-        // - Movies Search
+        // - Movies Search bar typing
         SearchQuery.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
