@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * This is an abstract class because it will be implemented for different requests types.
  * We can consider this abstract class as the API for APIMovieDB
  */
-public abstract class Controller{
+public abstract class Controller implements ControllerInterface{
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
