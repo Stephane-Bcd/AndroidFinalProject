@@ -12,7 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
-import boucaud.stephane.androidfinalproject.Controllers.ControllerGetGenres;
+import boucaud.stephane.androidfinalproject.Controllers.ControllerGenres;
+import boucaud.stephane.androidfinalproject.Models.GenresList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner_genres;
 
     TextView textview_selected_genre;
+    TextView textview_test;
 
     // Runtime parameters
     String Selected_genre;
@@ -34,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
      * @param values List of Strings
      * @param spinner Spinner reference
      */
-    private void fill_Spinner_Values(List<String> values, Spinner spinner){
+    private void fill_Spinner_Values(List<String> values, Spinner spinner, String value_default){
+        values.add(0, "None");
+        values.add(0, value_default);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, values);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -49,26 +56,36 @@ public class MainActivity extends AppCompatActivity {
         // Getting all objects from View
         spinner_genres = (Spinner) findViewById(R.id.spinner_genres);
         textview_selected_genre = (TextView) findViewById(R.id.spinner_genre_selected);
+        textview_test = (TextView) findViewById(R.id.test);
 
         // Initialising display data
-        // Genres selection:
 
-        Controller controller = new ControllerGetGenres(api_key, language);
+        // - Genres initiation
+        ControllerGenres controller = new ControllerGenres(api_key, language);
+        controller.queryGetGenres(new Callback<GenresList>(){
+            public void onResponse(Call<GenresList> call, Response<GenresList> response) {
+                if(response.isSuccessful()) {
+                    GenresList genresList = response.body();
+                    fill_Spinner_Values(genresList.getStringList(), spinner_genres, "Select Genre");
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+            public void onFailure(Call call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
-        List<String> list = new ArrayList<String>();
-        list.add("list 1");
-        list.add("list 2");
-        list.add("list 3");
 
-        fill_Spinner_Values(list, spinner_genres);
+        // Listeners
 
-
+        // - On Genres selection
         spinner_genres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Selected_genre = (String) parent.getItemAtPosition(position);
                 //For tests:
                 textview_selected_genre.setText("Selected genre: " + Selected_genre);
-                //textview_selected_genre.setVisibility(View.GONE);
+                textview_selected_genre.setVisibility(View.GONE);
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }

@@ -19,11 +19,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class Controller{
 
-    static final String BASE_URL = "https://api.themoviedb.org/3/";
+    private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
-    APIMovieDB API;
+    private APIMovieDB API;
+    private String API_KEY;
+    private String LANG;
 
-    public Controller() {
+
+
+    public APIMovieDB getAPI() {
+        return API;
+    }
+
+    public void setAPI(APIMovieDB API) {
+        this.API = API;
+    }
+
+    public String getAPI_KEY() {
+        return API_KEY;
+    }
+
+    public void setAPI_KEY(String API_KEY) {
+        this.API_KEY = API_KEY;
+    }
+
+    public String getLANG() {
+        return LANG;
+    }
+
+    public void setLANG(String LANG) {
+        this.LANG = LANG;
+    }
+
+
+    public Controller(String API_KEY, String LANG) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -34,5 +63,8 @@ public abstract class Controller{
                 .build();
 
         API = retrofit.create(APIMovieDB.class);
+
+        this.API_KEY = API_KEY;
+        this.LANG = LANG;
     }
 }

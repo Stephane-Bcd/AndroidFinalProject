@@ -35,6 +35,14 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" />
 
+    <TextView
+        android:id="@+id/test"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_genre_selected"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
+
 
 
 </android.support.constraint.ConstraintLayout>

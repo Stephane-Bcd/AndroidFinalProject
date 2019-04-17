@@ -3,8 +3,21 @@ package boucaud.stephane.androidfinalproject.Models;
 import com.google.gson.annotations.SerializedName;
 
 public class Genre {
-    public String genre_id;
-    public String genre_name;
+
+    @SerializedName("id")
+    private String genre_id;
+
+    @SerializedName("name")
+    private String genre_name;
+
+
+    public String getGenre_id() {
+        return genre_id;
+    }
+
+    public String getGenre_name() {
+        return genre_name;
+    }
 
     @Override
     public String toString() {
