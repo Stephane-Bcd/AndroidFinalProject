@@ -2,9 +2,12 @@ package boucaud.stephane.androidfinalproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,17 +24,21 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     // General parameters
-    String language = "fr";
-    String api_key = "8e894528fa9c319948a48ce050f28657";
+    private String language = "fr";
+    private String api_key = "8e894528fa9c319948a48ce050f28657";
+
+    //For API
+    private Controller controller;
 
     // View Objects
-    Spinner spinner_genres;
+    private Spinner spinner_genres;
+    private EditText SearchQuery;
 
-    TextView textview_selected_genre;
-    TextView textview_test;
+    private TextView textview_test;
 
     // Runtime parameters
-    String Selected_genre;
+    private String Selected_genre;
+    private int actual_page = 1;
 
 
     /***
@@ -48,6 +55,23 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(dataAdapter);
     }
 
+    private void searchMovies (int page, boolean include_adult, String query) {
+        controller.querySearchMovies(page, include_adult, query, new Callback<MoviesList>() {
+            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
+                if (response.isSuccessful()) {
+                    MoviesList moviesList = response.body();
+                    textview_test.setText(moviesList.getStringTitlesList().toString());
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+
+            public void onFailure(Call call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Getting all objects from View
         spinner_genres = (Spinner) findViewById(R.id.spinner_genres);
-        textview_selected_genre = (TextView) findViewById(R.id.spinner_genre_selected);
         textview_test = (TextView) findViewById(R.id.test);
+        SearchQuery = findViewById(R.id.SearchQuery);
 
         // Initialising display data
 
+        controller = new Controller(api_key, language);
+
         // - Genres initiation
-        Controller controller = new Controller(api_key, language);
         controller.queryGetGenres(new Callback<GenresList>(){
             public void onResponse(Call<GenresList> call, Response<GenresList> response) {
                 if(response.isSuccessful()) {
@@ -76,20 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // - Test Search
-        controller.querySearchMovies(1, false, "star wars", new Callback<MoviesList>(){
-            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
-                if(response.isSuccessful()) {
-                    MoviesList moviesList = response.body();
-                    textview_test.setText(moviesList.getStringTitlesList().toString());
-                } else {
-                    System.out.println(response.errorBody());
-                }
-            }
-            public void onFailure(Call call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+
 
 
         // Listeners
@@ -98,13 +110,32 @@ public class MainActivity extends AppCompatActivity {
         spinner_genres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Selected_genre = (String) parent.getItemAtPosition(position);
-                //For tests:
-                textview_selected_genre.setText("Selected genre: " + Selected_genre);
-                textview_selected_genre.setVisibility(View.GONE);
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        // - Movies Search
+        SearchQuery.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                actual_page = 1;
+                if (s.length() >= 0) {
+                    searchMovies (actual_page, false, s.toString());
+                } else {
+                    searchMovies (actual_page, false, "");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
 
     }
 }
