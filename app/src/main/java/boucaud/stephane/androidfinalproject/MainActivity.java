@@ -8,11 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
-import boucaud.stephane.androidfinalproject.Controllers.ControllerGenres;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialising display data
 
         // - Genres initiation
-        ControllerGenres controller = new ControllerGenres(api_key, language);
+        Controller controller = new Controller(api_key, language);
         controller.queryGetGenres(new Callback<GenresList>(){
             public void onResponse(Call<GenresList> call, Response<GenresList> response) {
                 if(response.isSuccessful()) {

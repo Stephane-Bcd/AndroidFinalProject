@@ -7,6 +7,7 @@ import java.util.List;
 
 import boucaud.stephane.androidfinalproject.APIMovieDB.APIMovieDB;
 import boucaud.stephane.androidfinalproject.Models.Genre;
+import boucaud.stephane.androidfinalproject.Models.GenresList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * This is an abstract class because it will be implemented for different requests types.
  * We can consider this abstract class as the API for APIMovieDB
  */
-public abstract class Controller implements ControllerInterface{
+public class Controller implements ControllerInterface{
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
@@ -67,4 +68,11 @@ public abstract class Controller implements ControllerInterface{
         this.API_KEY = API_KEY;
         this.LANG = LANG;
     }
+
+
+    public void queryGetGenres(Callback actions){
+        Call<GenresList> call = this.API.getGenres(this.API_KEY, this.LANG);
+        call.enqueue(actions);
+    }
+
 }

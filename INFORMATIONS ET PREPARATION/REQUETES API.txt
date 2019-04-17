@@ -1,2 +1,5 @@
 Get Movies genres:
 https://api.themoviedb.org/3/genre/movie/list?api_key=8e894528fa9c319948a48ce050f28657&language=fr
+
+Get Movies list:
+https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
