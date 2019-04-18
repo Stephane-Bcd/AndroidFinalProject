@@ -2,6 +2,8 @@ package boucaud.stephane.androidfinalproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,11 +14,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
+import boucaud.stephane.androidfinalproject.Models.Movie;
 import boucaud.stephane.androidfinalproject.Models.MoviesList;
+import boucaud.stephane.androidfinalproject.RecyclerViewClasses.SearchMoviesAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     // View Objects
     private Spinner spinner_genres;
     private EditText SearchQuery;
+    private RecyclerView moviesListRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private TextView textview_test;
 
@@ -41,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private String Selected_genre;
     private int Selected_genre_id;
     private int actual_page = 1;
+    private List<Movie> actual_movies = new ArrayList<Movie>();
 
 
     /***
@@ -68,10 +80,19 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 if (response.isSuccessful()) {
                     MoviesList moviesList = response.body();
-                    if (Selected_genre != "None" && Selected_genre != "Select Genre")
-                        textview_test.setText(moviesList.getMovies(Selected_genre_id).toString());
-                    else
-                        textview_test.setText(moviesList.getMovies().toString());
+                    if (Selected_genre != "None" && Selected_genre != "Select Genre"){
+                        //textview_test.setText(moviesList.getMovies(Selected_genre_id).toString());
+                        actual_movies = moviesList.getMovies(Selected_genre_id);
+                    }
+                    else{
+                        //textview_test.setText(moviesList.getMovies().toString());
+                        actual_movies = moviesList.getMovies();
+                    }
+
+                    // specify an adapter (see also next example)
+                    mAdapter = new SearchMoviesAdapter(actual_movies);
+                    moviesListRecyclerView.setAdapter(mAdapter);
+
                 } else {
                     System.out.println(response.errorBody());
                 }
@@ -92,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         spinner_genres = (Spinner) findViewById(R.id.spinner_genres);
         textview_test = (TextView) findViewById(R.id.test);
         SearchQuery = findViewById(R.id.SearchQuery);
+        moviesListRecyclerView = (RecyclerView) findViewById(R.id.moviesList);
 
         // Initialising display data
 
@@ -112,7 +134,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // - Recycler View for search result
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        moviesListRecyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        moviesListRecyclerView.setLayoutManager(layoutManager);
 
 
         // Listeners

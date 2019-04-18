@@ -104,6 +104,10 @@ public class Movie {
         return release_date;
     }
 
+    public String getPosterFullPath(){
+        return "https://image.tmdb.org/t/p/w500" + poster_path;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +

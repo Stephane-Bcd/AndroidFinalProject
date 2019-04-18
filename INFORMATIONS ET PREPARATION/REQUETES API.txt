@@ -4,3 +4,6 @@ https://api.themoviedb.org/3/genre/movie/list?api_key=8e894528fa9c319948a48ce050
 Get Movies list:
 https://api.themoviedb.org/3/search/movie?api_key=8e894528fa9c319948a48ce050f28657&language=fr&page=1&include_adult=false&query=ezdfezf
 https://api.themoviedb.org/3/search/multi?api_key=8e894528fa9c319948a48ce050f28657&language=fr&page=1&include_adult=false&query=ezdfezf
+
+Get Image:
+https://image.tmdb.org/t/p/w500/1s7NBHgWJXYtMOZmRJAIrxPReZZ.jpg
