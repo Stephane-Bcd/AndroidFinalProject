@@ -2,4 +2,8 @@
     <string name="app_name">AndroidFinalProject</string>
     <string name="Search_display">Enter you search query here</string>
     <string name="Search_page_title">Select search options:</string>
+    <string name="Main_page_title">The movie DB</string>
+    <string name="API_key_typing">Enter API key (optionnal):</string>
+    <string name="last_visited_button">Visited movies</string>
+    <string name="search_button">Search movies</string>
 </resources>
