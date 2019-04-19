@@ -4,9 +4,11 @@ import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Models.Genre;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
+import boucaud.stephane.androidfinalproject.Models.MovieDetails;
 import boucaud.stephane.androidfinalproject.Models.MoviesList;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /*
@@ -28,4 +30,10 @@ public interface APIMovieDB {
             @Query("query") String query
     );
 
+    @GET("movie/${movie_id}")
+    Call<MovieDetails> searchMovies(
+            @Path("movie_id") int movie_id,
+            @Query("api_key") String api_key,
+            @Query("language") String language
+    );
 }
