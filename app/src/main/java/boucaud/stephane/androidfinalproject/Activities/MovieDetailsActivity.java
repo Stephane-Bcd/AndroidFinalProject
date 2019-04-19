@@ -47,7 +47,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
                 if (response.isSuccessful()) {
                     MovieDetails movieDetails = response.body();
-                    
+
+                    textview_budget.setText("Budget:\n" + Integer.toString(movieDetails.getBudget()));
+                    textview_genres.setText("Genres:\n" + movieDetails.getGenresStringList());
+                    textview_title.setText(movieDetails.getTitle());
+                    textview_overview.setText("Overview:\n" + movieDetails.getOverview());
+                    textview_popularity.setText("Popularity:\n" + Float.toString(movieDetails.getPopularity()));
+                    textview_production_companies.setText("Production companies:\n" + movieDetails.getProductionCompaniesStringList());
+                    textview_production_countries.setText("Production Countries:\n" + movieDetails.getProductionCountriesStringList());
+                    textview_release_date.setText("Release Date:\n" + movieDetails.getRelease_date());
+                    textview_revenue.setText("Revenue:\n" + Integer.toString(movieDetails.getRevenue()));
+                    textview_spoken_languages.setText("Spoken languages:\n" + movieDetails.getSpokenLanguagesStringList());
+                    textview_status.setText("Status:\n" + movieDetails.getStatus());
+                    textview_vote_average.setText("Votes average:\n" + Float.toString(movieDetails.getVote_average()));
+                    textview_vote_count.setText("Votes count:\n" + Integer.toString(movieDetails.getVote_count()));
 
                 } else {
                     System.out.println(response.errorBody());

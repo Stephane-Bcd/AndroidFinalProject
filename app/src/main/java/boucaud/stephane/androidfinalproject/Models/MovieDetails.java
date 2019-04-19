@@ -170,4 +170,56 @@ public class MovieDetails {
     public String getPosterFullPath(){
         return "https://image.tmdb.org/t/p/w500" + poster_path;
     }
+
+    public String getGenresStringList(){
+        String res = "";
+        for (int i = 0; i < genres.size(); i++){
+            if (res.length()>0){
+                res += ", " + genres.get(i).getGenre_name();
+            }
+            else{
+                res += genres.get(i).getGenre_name();
+            }
+        }
+        return res;
+    }
+
+    public String getProductionCompaniesStringList(){
+        String res = "";
+        for (int i = 0; i < production_companies.size(); i++){
+            if (res.length()>0){
+                res += ", " + production_companies.get(i).getName();
+            }
+            else{
+                res += production_companies.get(i).getName();
+            }
+        }
+        return res;
+    }
+
+    public String getProductionCountriesStringList(){
+        String res = "";
+        for (int i = 0; i < production_countries.size(); i++){
+            if (res.length()>0){
+                res += ", " + production_countries.get(i).getName();
+            }
+            else{
+                res += production_countries.get(i).getName();
+            }
+        }
+        return res;
+    }
+
+    public String getSpokenLanguagesStringList(){
+        String res = "";
+        for (int i = 0; i < spoken_languages.size(); i++){
+            if (res.length()>0){
+                res += ", " + spoken_languages.get(i).getName();
+            }
+            else{
+                res += spoken_languages.get(i).getName();
+            }
+        }
+        return res;
+    }
 }

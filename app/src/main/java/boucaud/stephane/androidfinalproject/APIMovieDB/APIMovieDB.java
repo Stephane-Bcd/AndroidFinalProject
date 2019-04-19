@@ -30,7 +30,7 @@ public interface APIMovieDB {
             @Query("query") String query
     );
 
-    @GET("movie/${movie_id}")
+    @GET("movie/{movie_id}")
     Call<MovieDetails> getMovieDetails(
             @Path("movie_id") int movie_id,
             @Query("api_key") String api_key,
