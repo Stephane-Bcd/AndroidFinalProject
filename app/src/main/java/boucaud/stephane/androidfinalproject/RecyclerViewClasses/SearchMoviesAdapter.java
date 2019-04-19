@@ -1,5 +1,6 @@
 package boucaud.stephane.androidfinalproject.RecyclerViewClasses;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +14,18 @@ import boucaud.stephane.androidfinalproject.R;
 
 public class SearchMoviesAdapter extends RecyclerView.Adapter<SearchMoviesViewHolder> {
     private List<Movie> movies;
+    private String api_key;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SearchMoviesAdapter(List<Movie> movies) {
+    public SearchMoviesAdapter(List<Movie> movies, String api_key) {
+        this.api_key = api_key;
         this.movies = movies;
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
-    public SearchMoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_search_movies, parent, false);
@@ -34,7 +38,7 @@ public class SearchMoviesAdapter extends RecyclerView.Adapter<SearchMoviesViewHo
     public void onBindViewHolder(SearchMoviesViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.bind(movies.get(position));
+        holder.bind(movies.get(position), this.api_key);
 
     }
 

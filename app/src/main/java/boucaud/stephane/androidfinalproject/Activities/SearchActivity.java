@@ -1,4 +1,4 @@
-package boucaud.stephane.androidfinalproject;
+package boucaud.stephane.androidfinalproject.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import boucaud.stephane.androidfinalproject.Controllers.Controller;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
 import boucaud.stephane.androidfinalproject.Models.Movie;
 import boucaud.stephane.androidfinalproject.Models.MoviesList;
+import boucaud.stephane.androidfinalproject.R;
 import boucaud.stephane.androidfinalproject.RecyclerViewClasses.SearchMoviesAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     // specify an adapter (see also next example)
-                    mAdapter = new SearchMoviesAdapter(actual_movies);
+                    mAdapter = new SearchMoviesAdapter(actual_movies, api_key);
                     moviesListRecyclerView.setAdapter(mAdapter);
 
                 } else {

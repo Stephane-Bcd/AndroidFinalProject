@@ -1,35 +1,16 @@
-package boucaud.stephane.androidfinalproject;
+package boucaud.stephane.androidfinalproject.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
-import boucaud.stephane.androidfinalproject.Controllers.Controller;
-import boucaud.stephane.androidfinalproject.Models.GenresList;
-import boucaud.stephane.androidfinalproject.Models.Movie;
-import boucaud.stephane.androidfinalproject.Models.MoviesList;
-import boucaud.stephane.androidfinalproject.RecyclerViewClasses.SearchMoviesAdapter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import boucaud.stephane.androidfinalproject.R;
 
 public class MainActivity extends AppCompatActivity {
 
