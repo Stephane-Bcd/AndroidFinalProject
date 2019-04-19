@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
 import boucaud.stephane.androidfinalproject.Models.MovieDetails;
@@ -39,6 +42,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TextView textview_vote_average;
     private TextView textview_vote_count;
 
+    private ImageView thumbnail;
+
     // Runtime parameters
     private int movie_id;
 
@@ -61,6 +66,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     textview_status.setText("Status:\n" + movieDetails.getStatus());
                     textview_vote_average.setText("Votes average:\n" + Float.toString(movieDetails.getVote_average()));
                     textview_vote_count.setText("Votes count:\n" + Integer.toString(movieDetails.getVote_count()));
+                    Glide.with(getApplicationContext()).load(movieDetails.getPosterFullPath()).into(thumbnail);
 
                 } else {
                     System.out.println(response.errorBody());
@@ -101,6 +107,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         textview_title = findViewById(R.id.title);
         textview_vote_average = findViewById(R.id.vote_average);
         textview_vote_count = findViewById(R.id.vote_count);
+
+        thumbnail = findViewById(R.id.thumbnail);
 
         // Load DATA
 
