@@ -31,7 +31,7 @@ public interface APIMovieDB {
     );
 
     @GET("movie/${movie_id}")
-    Call<MovieDetails> searchMovies(
+    Call<MovieDetails> getMovieDetails(
             @Path("movie_id") int movie_id,
             @Query("api_key") String api_key,
             @Query("language") String language

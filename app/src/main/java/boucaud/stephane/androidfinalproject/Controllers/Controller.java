@@ -8,6 +8,7 @@ import java.util.List;
 import boucaud.stephane.androidfinalproject.APIMovieDB.APIMovieDB;
 import boucaud.stephane.androidfinalproject.Models.Genre;
 import boucaud.stephane.androidfinalproject.Models.GenresList;
+import boucaud.stephane.androidfinalproject.Models.MovieDetails;
 import boucaud.stephane.androidfinalproject.Models.MoviesList;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +56,10 @@ public class Controller implements ControllerInterface{
         call.enqueue(actions);
     }
 
-
+    public void queryMovieDetails(int movie_id, String api_key, String language, Callback actions){
+        Call<MovieDetails> call = this.API.getMovieDetails(movie_id, this.API_KEY, this.LANG);
+        call.enqueue(actions);
+    }
 
 
 
