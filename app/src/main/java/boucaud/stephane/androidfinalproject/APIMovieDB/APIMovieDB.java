@@ -36,4 +36,10 @@ public interface APIMovieDB {
             @Query("api_key") String api_key,
             @Query("language") String language
     );
+
+    @GET("trending/movie/{period}")
+    Call<MoviesList> getMovieTrends(
+            @Path("period") String period,
+            @Query("api_key") String api_key
+    );
 }

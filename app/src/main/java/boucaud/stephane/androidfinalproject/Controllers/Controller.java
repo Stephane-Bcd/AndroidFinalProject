@@ -61,6 +61,11 @@ public class Controller implements ControllerInterface{
         call.enqueue(actions);
     }
 
+    public void queryMovieTrends(String period, Callback actions){
+        Call<MoviesList> call = this.API.getMovieTrends(period, this.API_KEY);
+        call.enqueue(actions);
+    }
+
 
 
     public String getAPI_KEY() {
