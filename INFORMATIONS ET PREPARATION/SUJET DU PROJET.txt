@@ -9,4 +9,4 @@ V perform network operations (call the API with Retrofit)
 - display at least 3 RecyclerViews (1 horizontal, 1 vertical, 1 grid)
 V open several pages (Activities)
 V have a search functionality
-- save some user data
+V save some user data

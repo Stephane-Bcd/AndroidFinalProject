@@ -7,4 +7,5 @@
     <string name="last_visited_button">Visited movies</string>
     <string name="search_button">Search movies</string>
     <string name="Visited_page_title">Last visited movies:</string>
+    <string name="trend_movies_button">Trend movies</string>
 </resources>
