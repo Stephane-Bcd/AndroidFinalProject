@@ -6,4 +6,5 @@
     <string name="API_key_typing">Enter API key (optionnal):</string>
     <string name="last_visited_button">Visited movies</string>
     <string name="search_button">Search movies</string>
+    <string name="Visited_page_title">Last visited movies:</string>
 </resources>

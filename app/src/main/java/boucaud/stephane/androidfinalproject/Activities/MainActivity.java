@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     // View Objects
     private EditText typed_api_key;
     private Button search_button;
+    private Button last_videos_button;
 
     private TextView textview_test;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         textview_test = (TextView) findViewById(R.id.test);
         typed_api_key = findViewById(R.id.typed_api_key);
         search_button = findViewById(R.id.search_button);
+        last_videos_button = findViewById(R.id.last_movies_button);
 
         // Initialising display data
 
@@ -66,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+                intent.putExtra("default_api_key", api_key);
+                intent.putExtra("typed_api_key", actual_api_key);
+                startActivity(intent);
+            }
+        });
+
+        // - Last videos button
+        last_videos_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), VisitedActivity.class);
                 intent.putExtra("default_api_key", api_key);
                 intent.putExtra("typed_api_key", actual_api_key);
                 startActivity(intent);

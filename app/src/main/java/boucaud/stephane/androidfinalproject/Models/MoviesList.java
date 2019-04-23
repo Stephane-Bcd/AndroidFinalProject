@@ -14,6 +14,14 @@ public class MoviesList {
         return movies;
     }
 
+    public MoviesList(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public void add_Movie(Movie m){
+        this.movies.add(m);
+    }
+
     /**
      * Get the movies but only the ones mathing with a genre id
      * @param genre_filter : Integer representing a genre; used to filter movies

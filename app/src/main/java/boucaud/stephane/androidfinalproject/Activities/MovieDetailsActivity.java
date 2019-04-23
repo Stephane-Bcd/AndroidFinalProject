@@ -1,6 +1,8 @@
 package boucaud.stephane.androidfinalproject.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,8 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import boucaud.stephane.androidfinalproject.Controllers.Controller;
+import boucaud.stephane.androidfinalproject.Models.Movie;
 import boucaud.stephane.androidfinalproject.Models.MovieDetails;
 import boucaud.stephane.androidfinalproject.Models.MoviesList;
 import boucaud.stephane.androidfinalproject.R;
@@ -47,10 +57,34 @@ public class MovieDetailsActivity extends AppCompatActivity {
     // Runtime parameters
     private int movie_id;
 
+    // Shared preferences
+    SharedPreferences savedMovies;
+    String SHARED_PREFS_FILE = "SAVED_MOVIES";
+
+
+    /**
+     * Function to save the movies into Shared preferences
+     * @param key
+     * @param value
+     */
+    private void SavePreferences(String key, String value){
+        SharedPreferences.Editor editor = savedMovies.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    private String LoadPreferences(String key, String default_value){
+        return savedMovies.getString(key, default_value) ;
+    }
+
+    /**
+     * Function to load data from API to describe movie details
+     */
     private void load_movie_data(){
         controller.queryMovieDetails(movie_id, api_key, language ,new Callback<MovieDetails>() {
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
                 if (response.isSuccessful()) {
+                    //IF SUCCESSFULL API CALL
                     MovieDetails movieDetails = response.body();
 
                     textview_budget.setText("Budget:\n" + Integer.toString(movieDetails.getBudget()));
@@ -67,6 +101,36 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     textview_vote_average.setText("Votes average:\n" + Float.toString(movieDetails.getVote_average()));
                     textview_vote_count.setText("Votes count:\n" + Integer.toString(movieDetails.getVote_count()));
                     Glide.with(getApplicationContext()).load(movieDetails.getPosterFullPath()).into(thumbnail);
+
+                    // IF DATA LOADED SUCESSFULLY
+                    Movie[] current_saved_movies;
+                    Movie[] tmp_current_saved_movies;
+                    String current_saved_movies_json;
+                    Movie current_movie;
+
+                    Gson gson = new Gson();
+                    current_movie = new Movie(movieDetails);
+
+                    // Decode already saved movies
+                    current_saved_movies_json = LoadPreferences("current_saved_movies", "[]");
+                    current_saved_movies = gson.fromJson(current_saved_movies_json, Movie[].class);
+
+                    // Copy old data and free space for new one
+                    if (current_saved_movies.length <= 0) {
+                        current_saved_movies = new Movie[1];
+                    }
+                    else {
+                        tmp_current_saved_movies = new Movie[current_saved_movies.length + 1];
+                        System.arraycopy(current_saved_movies,0,tmp_current_saved_movies,0,current_saved_movies.length);
+                        current_saved_movies = tmp_current_saved_movies;
+                    }
+
+                    // Add current movie and encode in JSON
+                    current_saved_movies[current_saved_movies.length-1] = current_movie;
+                    String json = gson.toJson(current_saved_movies);
+
+                    // Save new visited movie to Shared Preferences
+                    SavePreferences("current_saved_movies", json);
 
                 } else {
                     System.out.println(response.errorBody());
@@ -91,6 +155,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
             movie_id = intent.getIntExtra("movie_id", 0);
             api_key = intent.getStringExtra("api_key");
         }
+
+        // Prepare Shared Preferences to save viewed movies
+        savedMovies =  getSharedPreferences(SHARED_PREFS_FILE, getApplicationContext().MODE_PRIVATE);
 
         // Load View Objects
 

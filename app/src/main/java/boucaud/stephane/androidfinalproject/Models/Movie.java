@@ -36,6 +36,8 @@ public class Movie {
     @SerializedName("genre_ids")
     private List<Integer> genre_ids;
 
+    private String genresStringList;
+
     @SerializedName("backdrop_path")
     private String backdrop_path;
 
@@ -47,6 +49,23 @@ public class Movie {
 
     @SerializedName("release_date")
     private String release_date;
+
+    public Movie(MovieDetails movieDetails){
+        this.vote_count = movieDetails.getVote_count();
+        this.id = movieDetails.getId();
+        this.video = movieDetails.isVideo();
+        this.vote_average = movieDetails.getVote_average();
+        this.title = movieDetails.getTitle();
+        this.popularity = movieDetails.getPopularity();
+        this.poster_path = movieDetails.getPoster_path();
+        this.original_language = movieDetails.getOriginal_language();
+        this.original_title = movieDetails.getOriginal_title();
+        this.genresStringList = movieDetails.getGenresStringList();
+        this.backdrop_path = movieDetails.getBackdrop_path();
+        this.adult = movieDetails.isAdult();
+        this.overview = movieDetails.getOverview();
+        this.release_date = movieDetails.getRelease_date();
+    }
 
     public int getVote_count() {
         return vote_count;
@@ -102,6 +121,10 @@ public class Movie {
 
     public String getRelease_date() {
         return release_date;
+    }
+
+    public String getGenresStringList() {
+        return genresStringList;
     }
 
     public String getPosterFullPath(){
